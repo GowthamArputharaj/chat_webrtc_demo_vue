@@ -62,7 +62,7 @@ export default {
         setparams() {
 
             if(this.mypeer._id) {
-
+ 
                 Swal.fire({
                     title: `Already connected to ${this.mypeer._id}`,
                     text: '',
