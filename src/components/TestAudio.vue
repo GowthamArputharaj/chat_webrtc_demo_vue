@@ -14,19 +14,15 @@
                 <input type="text" v-model="connectTo" name="connectTo" id="connectTo">
             </div>
         </form>
-        <div class="w-full">
-            <label for="connectTo">My message: </label>
-            <textarea v-model="message" name="message" id="message" cols="20" rows="10"></textarea>
-        </div>
         <hr>
-        <div class="videos">
+        <div class="audios">
             <div>
                 <h4>My Stream</h4>
-                <video src="" id="my_stream" controls></video>
+                <audio src="" id="my_stream" controls></audio>
             </div>
             <div>
                 <h4>Incoming Stream</h4>
-                <video src="" id="incoming_stream" controls></video>
+                <audio src="" id="incoming_stream" controls></audio>
             </div>
         </div>
         <div class="w-100">
@@ -43,7 +39,7 @@ import Peer from 'peerjs';
 import Swal from 'sweetalert2'
 
 export default {
-    name: "TestWebrtc",
+    name: "TestAudio",
     data() {
         return {
             my_stream: null,
@@ -59,7 +55,7 @@ export default {
         console.log('Welcome to TestWebRTC');
     },
     methods: {
-        setparams() {
+        async setparams() {
 
             if(this.mypeer._id) {
  
@@ -75,46 +71,61 @@ export default {
             // create our peer 
             this.mypeer = new Peer(this.myPeerId);
             
-            this.mypeer.on('connection', (inner_conn) => {
-                
-                inner_conn.on('data', (data) => {
+            // answer
+            this.mypeer.on('call', async (call) => {
 
-                    Swal.fire({
-                        title: `Received: ${data}`,
-                        text: '',
-                        type: 'success',
-                    });
+                var stream = await navigator.mediaDevices.getUserMedia({video: false, audio: true})
 
-                    console.log(`Received: ${data}`);
-                    
+                // set my_stream from our device capture
+                document.querySelector('#my_stream').srcObject = stream;
+
+                call.answer(stream); // Answer the call with an A/V stream.
+                call.on('stream', (remoteStream) => {
+                    // Show stream in some <audio> element.
+                    document.querySelector('#incoming_stream').srcObject = remoteStream;   
                 });
-
             });
 
+            // check for peer error
             this.mypeer.on('error', (err) => {
                 console.log('error occ ', err);
+
+                Swal.fire({
+                    title: 'Error occured',
+                    text: `${err}`,
+                    type: 'error',
+                });
+
                 alert(err);
             })
 
-            
-            
         },
-        call() {
-
+        async call() {
+            console.log(document.querySelector('#incoming_stream'));
             try {
+                
+                // call to connect to 'peer id'
+                var stream = await navigator.mediaDevices.getUserMedia({video: false, audio: true})
 
-                // connect to 
-                this.conn = this.mypeer.connect(this.connectTo);
-
-                this.conn.on('open', () => {
-                    console.log('conn opened')
-                    
-                    // send message
-                    this.conn.send(this.message);
+                // set my_stream from our device capture
+                document.querySelector('#my_stream').srcObject = stream;
+                
+                const call = this.mypeer.call(this.connectTo, stream);
+                
+                call.on('stream', (remoteStream) => {
+                    // Show stream in some <audio> element.
+                    document.querySelector('#incoming_stream').srcObject = remoteStream;      
                 });
 
             } catch (error) {
                 console.log(error);
+
+                Swal.fire({
+                    title: 'Error occured',
+                    text: `${error}`,
+                    type: 'error',
+                });
+
             }
 
         }
@@ -127,10 +138,12 @@ input {
     width: 25vw;
     height: 2rem;
 }
-.videos, form {
+.audios, form {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    background: #ccc;
+    padding: 1rem;
 }
 .w-100 {
     display: flex;
@@ -156,4 +169,12 @@ textarea {
     width: 50%;
     box-sizing: border-box;
 }
+@media only screen and (max-width: 600px) {
+    .audios, form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
 </style>
