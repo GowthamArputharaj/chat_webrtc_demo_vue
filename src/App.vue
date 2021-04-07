@@ -7,11 +7,6 @@
       <a href="?page=chat">Chat</a>
       <a href="?page=call">Audio Call</a>
       <a href="?page=video">Video Call</a>
-      <!-- <span to="/call" v-on:click="showPage = 'call'">Audio Call</span>
-      <span to="/video" v-on:click="showPage = 'video'">Video Call</span> -->
-      <!-- <span to="/chat" v-on:click="showPage = 'chat'">Chat</span>
-      <span to="/call" v-on:click="showPage = 'call'">Audio Call</span>
-      <span to="/video" v-on:click="showPage = 'video'">Video Call</span> -->
     </nav>
 
     <div>

@@ -29,6 +29,7 @@
             <button v-on:click="showGuide()">Help</button>
             <button v-on:click="setparams()">Set Parameters</button>
             <button v-on:click="call()">Call</button>
+            <a href="?page=video" class="btn-end" >End Call</a>
         </div>
     </div>
 </template>
@@ -170,7 +171,7 @@ input {
     justify-content: space-evenly;
 
 }
-button {
+button, .btn-end {
     background: rgb(72, 255, 0);
     color: black;
     font-weight: 800;
@@ -187,6 +188,11 @@ button {
 textarea {
     width: 50%;
     box-sizing: border-box;
+}
+.btn-end {
+    background: rgb(255, 0, 0) !important;
+    text-decoration: none;
+    color: #ffffff;
 }
 @media only screen and (max-width: 600px) {
     .videos, form {
