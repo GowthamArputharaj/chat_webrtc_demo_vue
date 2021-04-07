@@ -26,6 +26,7 @@
             </div>
         </div>
         <div class="w-100">
+            <button v-on:click="showGuide()">Help</button>
             <button v-on:click="setparams()">Set Parameters</button>
             <button v-on:click="call()">Call</button>
         </div>
@@ -53,6 +54,14 @@ export default {
     },
     beforeCreate() {
         console.log('Welcome to TestWebRTC');
+
+        // Swal.fire({
+        //     title: 'Guide',
+        //     text: `1. Enter Your peer id and Target peer id.\n 2. Click 'Set Parameter' button.. \n3. Enter your message and click 'Call' `,
+        //     type: 'success',
+        //     showConfirmButton: true,
+        // })
+
     },
     methods: {
         async setparams() {
@@ -127,6 +136,16 @@ export default {
                 });
 
             }
+
+        },
+        showGuide() {
+            
+            Swal.fire({
+                title: 'Guide',
+                text: `1. Enter Your peer id and Target peer id.\n2. Click 'Set Parameters' button. \n3. Enter your message and click 'Call' `,
+                type: 'success',
+                showConfirmButton: true,
+            })
 
         }
     }

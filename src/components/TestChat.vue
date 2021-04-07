@@ -19,21 +19,10 @@
             <textarea v-model="message" name="message" id="message" cols="20" rows="10"></textarea>
         </div>
         <hr>
-        <!--         
-        <div class="videos">
-            <div>
-                <h4>My Stream</h4>
-                <video src="" id="my_stream" controls></video>
-            </div>
-            <div>
-                <h4>Incoming Stream</h4>
-                <video src="" id="incoming_stream" controls></video>
-            </div>
-        </div> 
-        -->
         <div class="w-100">
+            <button v-on:click="showGuide()">Help</button>
             <button v-on:click="setparams()">Set Parameters</button>
-            <button v-on:click="call()">Call</button>
+            <button v-on:click="call()">Send Message</button>
         </div>
     </div>
 </template>
@@ -59,6 +48,14 @@ export default {
     },
     beforeCreate() {
         console.log('Welcome to TestWebRTC');
+
+        // Swal.fire({
+        //     title: 'Guide',
+        //     text: `1. Enter Your peer id and Target peer id.\n 2. Click 'Set Parameter' button.. \n3. Enter your message and click 'Send Message' `,
+        //     type: 'success',
+        //     showConfirmButton: true,
+        // })
+
     },
     methods: {
         setparams() {
@@ -119,6 +116,14 @@ export default {
                 console.log(error);
             }
 
+        },
+        showGuide() {
+            Swal.fire({
+                title: 'Guide',
+                text: `1. Enter Your peer id and Target peer id.\n 2. Click 'Set Parameter' button.. \n3. Enter your message and click 'Send Message' `,
+                type: 'success',
+                showConfirmButton: true,
+            })
         }
     }
 }

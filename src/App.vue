@@ -3,9 +3,15 @@
   <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   <div>
     <nav>
-      <span to="/chat" v-on:click="showPage = 'chat'">Chat</span>
+      <!-- <span to="/chat" v-on:click="'chat'">Chat</span> -->
+      <a href="?page=chat">Chat</a>
+      <a href="?page=call">Audio Call</a>
+      <a href="?page=video">Video Call</a>
+      <!-- <span to="/call" v-on:click="showPage = 'call'">Audio Call</span>
+      <span to="/video" v-on:click="showPage = 'video'">Video Call</span> -->
+      <!-- <span to="/chat" v-on:click="showPage = 'chat'">Chat</span>
       <span to="/call" v-on:click="showPage = 'call'">Audio Call</span>
-      <span to="/video" v-on:click="showPage = 'video'">Video Call</span>
+      <span to="/video" v-on:click="showPage = 'video'">Video Call</span> -->
     </nav>
 
     <div>
@@ -23,16 +29,15 @@
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
 // import TestWebrtc from '@/components/TestWebrtc.vue'
 import TestChat from '@/components/TestChat.vue'
 import TestAudio from '@/components/TestAudio.vue'
 import TestVideo from '@/components/TestVideo.vue'
+// import router from '@/router'
 
 export default {
   name: 'App',
   components: {
-    // HelloWorld,
     TestChat,
     TestAudio,
     TestVideo
@@ -41,6 +46,14 @@ export default {
     return {
       showPage: 'chat',
     }
+  },
+  created() {
+    var url = new URL(window.location.href);
+
+    var route_name = url.searchParams.get('page');
+
+    this.showPage = route_name;
+
   }
 }
 </script>
