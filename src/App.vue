@@ -4,7 +4,8 @@
   <div>
     <nav>
       <span to="/chat" v-on:click="showPage = 'chat'">Chat</span>
-      <span to="/call" v-on:click="showPage = 'call'">Call</span>
+      <span to="/call" v-on:click="showPage = 'call'">Audio Call</span>
+      <span to="/video" v-on:click="showPage = 'video'">Video Call</span>
     </nav>
 
     <div>
@@ -13,6 +14,9 @@
       </div>
       <div v-if="showPage == 'call'">
         <TestAudio />
+      </div>
+      <div v-if="showPage == 'video'">
+        <TestVideo />
       </div>
     </div>
   </div>
@@ -23,13 +27,15 @@
 // import TestWebrtc from '@/components/TestWebrtc.vue'
 import TestChat from '@/components/TestChat.vue'
 import TestAudio from '@/components/TestAudio.vue'
+import TestVideo from '@/components/TestVideo.vue'
 
 export default {
   name: 'App',
   components: {
     // HelloWorld,
     TestChat,
-    TestAudio
+    TestAudio,
+    TestVideo
   },
   data() {
     return {

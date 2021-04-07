@@ -4,6 +4,7 @@
 import VueRouter from 'vue-router'
 import TestChat from '../components/TestChat.vue'
 import TestAudio from '../components/TestAudio.vue'
+import TestVideo from '../components/TestVideo.vue'
 
 const routes = [
     {
@@ -15,6 +16,11 @@ const routes = [
         path: '/call',
         name: 'call',
         component: TestAudio,
+    },
+    {
+        path: '/video',
+        name: 'video',
+        component: TestVideo,
     }
 ]
 
